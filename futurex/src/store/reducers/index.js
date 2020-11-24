@@ -3,7 +3,7 @@ import { combineReducers} from 'redux';
 
 
 const allReducers = combineReducers({
-    currency: currencyReducer
+    currency: currencyReducer,
 })
 
 export default allReducers

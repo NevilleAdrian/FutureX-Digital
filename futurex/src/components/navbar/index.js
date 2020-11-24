@@ -15,20 +15,23 @@ import PayPalBtn from "../paypal"
 
 export default function NavBar({ increment, decrement, displayNav, showNav, remove, removeAll, items }) {
 
-
+   //Get Currency from the redux store
     const curr = useSelector(state => state.currency);
 
+    //Initialized didpatch functionality
     const dispatch = useDispatch();
 
     //Calculate total price
     const calculateItems = items.reduce((accumulator, current) => accumulator += current.count * current.price, 0)
-
+    
+    //Showpaypal popup
     const [showPaypal, setShowPayPal] = useState(false)
 
     const handleShowPayPal = () => {
         setShowPayPal(!showPaypal)
     }
-
+    
+    //Printout payment details
     const paymentHandler = (details, data) => {
         console.log(details, data);
       }
@@ -38,7 +41,7 @@ export default function NavBar({ increment, decrement, displayNav, showNav, remo
         <>
             {showPaypal ? 
             <PayPalBtn
-                    amount = {200}
+                    amount = {calculateItems}
                     currency = {'USD'}
                     onSuccess = {paymentHandler}
                     /> :

@@ -6,41 +6,39 @@ import NavBar from '../navbar';
 import { useSelector } from 'react-redux'
 import { formattedCurrency } from '../../utils';
 
-  
+
 export default function Body() {
 
     //Get Currency from Redux Store
     const curr = useSelector(state => state.currency);
 
 
+
     //Retrieve products from graphql with unique currency
     const getProducts = () =>
-    axios.get('https://fakestoreapi.com/products')
-     .then(products => {
-      setProducts(products.data)
-   }).catch(err => console.log(err))
-     
-    
+        axios.get('https://fakestoreapi.com/products')
+            .then(products => {
+                setProducts(products.data)
+            }).catch(err => console.log(err))
 
+
+    // Initialized empty product state
     const [products, setProducts] = useState([])
 
     useEffect(() => {
         getProducts()
     }, [])
 
-    console.log(products) 
 
+    //Initialized empty cart item state
     const [cartItems, setCartItems] = useState([])
 
 
-    const changeShow = (item) => {
+    // Add Item Id
+    const addItemId = (item) => {
         increment(item)
         window.scrollTo(0, 0);
     }
-
-    useEffect(() => {
-        console.log('array', cartItems)
-    }, [cartItems])
 
 
     //Check if cart item to be this ID
@@ -65,7 +63,7 @@ export default function Body() {
         }
     }
 
-    //remove item from product
+    //Remove item from product
     const removeItem = (id) => {
         setCartItems(cartItems.filter(a => a.id !== id))
     }
@@ -100,17 +98,34 @@ export default function Body() {
     }
 
     //Remove all Items in Product
-     const removeAllItems = () => {
+    const removeAllItems = () => {
         setCartItems([])
+        localStorage.removeItem('data')
         console.log('deleted', cartItems)
-     }
+    }
 
-     //Add Cart Product
-     const cartProducts = () => {
-       var data = products.filter(product => isInCart(product.id)).map(product => addCountToProduct(product))
-       return data
-     }
-     
+    //Add Cart Product
+    const cartProducts = () => {
+        var data = products.filter(product => isInCart(product.id)).map(product => addCountToProduct(product))
+        addToLocalStorage(data)
+        return getCartItemsInLocalStorage() || []
+    }
+
+    // Add Product to local storage
+    const addToLocalStorage = (data) => {
+        if (localStorage && data && data.length) {
+            localStorage.setItem('data', JSON.stringify(data))
+        }
+    }
+
+    //Retrieve Cart Items from Local Storage
+    const getCartItemsInLocalStorage = () => {
+        const data = localStorage.getItem('data')
+        if (data) {
+            return JSON.parse(data)
+        }
+    }
+
 
     return (
         <>
@@ -135,7 +150,7 @@ export default function Body() {
                                 <p className="text-center title">{item.title}</p>
                                 <p className="text-center"><span>From</span> {formattedCurrency(item.price, curr)}</p>
                                 <div className="text-center">
-                                    <button onClick={() => changeShow(item.id)} className="button-primary ">Add to Cart</button>
+                                    <button onClick={() => addItemId(item.id)} className="button-primary ">Add to Cart</button>
                                 </div>
                             </div>
                         ))}
