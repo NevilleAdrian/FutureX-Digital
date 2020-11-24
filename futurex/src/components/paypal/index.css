@@ -1,0 +1,27 @@
+.paypal-body {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: #fff;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    padding: 0px 30px 0px 30px;
+    overflow: auto;
+}
+
+.middle {
+    padding-top: 25%;
+    text-align: center;
+}
+
+.cancel {
+    padding-top: 25px;
+
+}
+
+.green {
+    color: forestgreen;
+    font-weight: bold;
+    font-size: 24px;
+}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import "./index.css"
-import Logo from "../../assets/images/lumin.png"
+import Logo from "../../assets/images/logofx.png"
 import Cart from "../../assets/images/cart.png"
 import Arrow from "../../assets/images/left-arrow.png"
 import X from "../../assets/images/x.png"
@@ -31,9 +31,12 @@ export default function NavBar({ increment, decrement, displayNav, showNav, remo
         setShowPayPal(!showPaypal)
     }
     
+   const [success, setSuccess] = useState('')
+   
     //Printout payment details
     const paymentHandler = (details, data) => {
-        console.log(details, data);
+        console.log('data', data);
+        setSuccess(details.status)
       }
   
 
@@ -41,9 +44,11 @@ export default function NavBar({ increment, decrement, displayNav, showNav, remo
         <>
             {showPaypal ? 
             <PayPalBtn
+                    close ={handleShowPayPal}
                     amount = {calculateItems}
                     currency = {'USD'}
                     onSuccess = {paymentHandler}
+                    success = {success}
                     /> :
                 <>
                     <div className="nav-bottom">
@@ -56,12 +61,6 @@ export default function NavBar({ increment, decrement, displayNav, showNav, remo
 
                             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul className="navbar-nav mr-auto">
-                                    <li className="nav-item active">
-                                        <a className="nav-link">Shop <span className="sr-only">(current)</span></a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link">Learn</a>
-                                    </li>
                                 </ul>
                                 <a className="nav-link pl-0">Account</a>
 

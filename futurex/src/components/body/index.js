@@ -134,7 +134,7 @@ export default function Body() {
                 <div className="row">
                     <div className="col-md-6">
                         <h1 className="main-weight">All Products</h1>
-                        <p className="weight-100">A 360° look at Lumin</p>
+                        <p className="weight-100">A 360° look at FutureX</p>
                     </div>
                 </div>
             </div>
